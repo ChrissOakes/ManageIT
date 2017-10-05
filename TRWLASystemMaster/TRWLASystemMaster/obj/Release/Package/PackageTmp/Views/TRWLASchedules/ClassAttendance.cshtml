@@ -1,0 +1,21 @@
+﻿@model IEnumerable<TRWLASystemMaster.Models.ClassAttendance>
+
+@{
+    ViewBag.Title = "ClassAttendance";
+    Layout = "~/Views/Shared/VolunteerLoggedInPage.cshtml";
+}
+
+<div class="jumbotron">
+    <h2>ClassAttendance</h2>
+</div>
+
+<div>
+    <img src="@Url.Action("ClassAttendance")"/>
+
+    <div class="form-group">
+        <div style="margin-right:5px; float:right;">
+            <button type="button" class="btn" onclick="location.href='@Url.Action("Index", "TRWLASchedules")'">Return</button>
+        </div>
+    </div>
+</div>
+

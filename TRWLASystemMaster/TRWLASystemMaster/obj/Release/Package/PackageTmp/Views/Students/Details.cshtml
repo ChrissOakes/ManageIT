@@ -1,0 +1,112 @@
+﻿@model TRWLASystemMaster.Models.DB.Student
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/VolunteerLoggedInPage.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Student Number  @*@Html.DisplayNameFor(model => model.StudentNumber)*@
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentNumber)
+        </dd>
+
+        @*<dt>
+            @Html.DisplayNameFor(model => model.Graduate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Graduate)
+        </dd>*@
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Degree)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Degree)
+        </dd>
+
+        <dt>
+            Academic Commencement Date   @*@Html.DisplayNameFor(model => model.YearOfStudy)*@
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YearOfStudy)
+        </dd>
+
+        <dt>
+            Student Name   @*@Html.DisplayNameFor(model => model.Student_Name)*@
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student_Name)
+        </dd>
+
+        <dt>
+            Student Surname  @*@Html.DisplayNameFor(model => model.Student_Surname)*@
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student_Surname)
+        </dd>
+
+        <dt>
+            Phone Number      @*@Html.DisplayNameFor(model => model.Student_Phone)*@
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student_Phone)
+        </dd>
+
+        <dt>
+            DoB   @*@Html.DisplayNameFor(model => model.Student_DoB)*@
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student_DoB)
+        </dd>
+
+        @*<dt>
+            @Html.DisplayNameFor(model => model.ActiveStatus)*
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActiveStatus)
+        </dd>*@
+
+        <dt>
+            Residence      @*@Html.DisplayNameFor(model => model.Residence.Res_Name)*@
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Residence.Res_Name)
+        </dd>
+
+        <dt>
+            Student Type      @*@Html.DisplayNameFor(model => model.StudentType.StudentTypeDescription)*@
+        </dt>
+
+        <dd>
+                @Html.DisplayFor(model => model.StudentType.StudentTypeDescription)
+        </dd>
+
+        <dt>
+            User Type   @*@Html.DisplayNameFor(model => model.UserType.Description)*@
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserType.Description)
+        </dd>
+
+    </dl>
+</div>
+<button type="button" class="btn" onclick="location.href='@Url.Action("Index")'">Back</button>

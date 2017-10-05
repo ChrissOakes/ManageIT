@@ -1,0 +1,87 @@
+﻿@model IEnumerable<TRWLASystemMaster.Models.DB.RSVP_Event>
+
+@{
+    ViewBag.Title = "RSVPdMembers";
+    Layout = "~/Views/Shared/VolunteerLoggedInPage.cshtml";
+}
+
+<div class="jumbotron">
+    <h2>RSVPd Members</h2>
+</div>
+
+<div class="form-inline" style="margin-bottom:10px;">
+    <div class="form-group">
+        @using (Html.BeginForm())
+        {
+            <p>
+                @Html.Label("Find by name:") @Html.TextBox("searchString"@*, "", new { placeholder = "Name of Event" }*@)
+                <button type="submit" value="Search" class="btn"><i class="fa fa-search" aria-hidden="true"></i>Search</button>
+            </p>
+        }
+    </div>
+</div>
+
+@if (TempData["Attend"] != null)
+{
+    <h4>@TempData["Attend"]</h4>
+}
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Surname
+        </th>
+        <th>
+            Student Number
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Degree
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Where(p=>p.Attended == null))
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SYSUserProfile.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SYSUserProfile.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SYSUserProfile.StudentNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SYSUserProfile.Email)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.SYSUserProfile.Degree)
+            </td>
+            <td>
+                @Html.ActionLink("Log Attendance", "ConfirmAttendance", "TRWLASchedules", new { studid = item.SYSUserProfile.SYSUserProfileID, evid = item.rsvpID }, null)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+<div class="form-inline" style="float:right;">
+    <div class="form-group" style="margin-right:5px;">
+        <button type="button" class="btn" onclick="location.href='@Url.Action("AddNewStudent", "TRWLASchedules")'">Add New Student</button>
+    </div>
+    <div class="form-group" style="margin-right:5px;">
+        <button type="button" class="btn" onclick="location.href='@Url.Action("LogAttendance", "TRWLASchedules")'">Return</button>
+    </div>
+</div>

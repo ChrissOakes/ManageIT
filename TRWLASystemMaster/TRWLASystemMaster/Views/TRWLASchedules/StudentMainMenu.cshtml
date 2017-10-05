@@ -1,0 +1,170 @@
+﻿@model IEnumerable<TRWLASystemMaster.Models.DB.TRWLASchedule>
+
+@{
+    ViewBag.Title = "StudentMainMenu";
+    Layout = "~/Views/Shared/StudentLoggedInView.cshtml";
+}
+
+<div class="jumbotron">
+    <h1>ManageIT</h1>
+    <h4>An Evenets Management System</h4>
+    <div class="quoteform"></div>
+    <div class="quote1form"></div>
+    <div class="quote2form"></div>
+</div>
+
+@*<div id="divUserListContainer">
+        @Html.Action("ManageUserPartial", "Manage");
+    </div>*@
+
+<script>
+    function doNavigate() {
+        window.location.href = document.getElementById("UrlList").value;
+    };
+</script>
+
+@if (Session["User"] != null)
+{
+
+
+
+    if (TempData["rsvp"] != null)
+    {
+    <h4>@TempData["rsvp"]</h4>
+    }
+    if (TempData["rsvpFAIL"] != null)
+    {
+    <h4>@TempData["rsvpFAIL"]</h4>
+    }
+    if (TempData["Attended"] != null)
+    {
+    <h4>@TempData["Attended"]</h4>
+    }
+    <div class="row" @*id="showMe" style="display:none;*@>
+        <div class="col-md-12">
+            <div class="form-inline">
+                <div class="form-group">
+                    <h2 style="z-index:100; position:relative; background-color:transparent;">Search Events</h2>
+                    @using (Html.BeginForm())
+                {
+                        <div class="form-inline" style="margin-bottom:10px;">
+                            <p data-toggle="tooltip" title="Search by name" class="form-group">
+                                @Html.TextBox("searchString", "", new { placeholder = "Name of Event", @class = "form-control", style = "width:100%;" })
+                            </p>
+
+                            <p class="form-group">
+                                <button data-toggle="tooltip" title="Search" type="submit" value="Search" class="btn"><i class="fa fa-search" aria-hidden="true" style="color:black;"></i></button>
+                            </p>
+                        </div>
+                    }
+                    <select style="width:100%;" data-toggle="tooltip" title="Filter Events" id="UrlList" onchange="doNavigate()" class="form-control" style="margin-bottom:20px; width:90%;">
+                        <option value="">Filter by...</option>
+                        <option value="@Url.Action("Index", "TRWLASchedules", new { all = ViewBag.SurnameSortParm })'">Show All</option>
+                        <option value="@Url.Action("Index", "TRWLASchedules", new { CO = ViewBag.SurnameSortParm })'">Community Engagement Events</option>
+                        <option value="@Url.Action("Index", "TRWLASchedules", new { L = ViewBag.SurnameSortParm })'">Lecture Events</option>
+                        <option value="@Url.Action("Index", "TRWLASchedules", new { F = ViewBag.SurnameSortParm })'">Function Events</option>
+                    </select>
+                </div>
+                <div class="form-group" style="z-index:100; position:relative; background-color:transparent; margin-left:50px; margin-top:20px;">
+                    <h2 style="z-index:100; position:relative; background-color:transparent; margin-top:-50px; ">My Dashboard</h2>
+                    <div class="form-inline">
+                        <div class="form-group" style="width:100%;">
+                            <div>
+                                <button style="width:100%;"  data-toggle="tooltip" title="View your Dashboard" id="button1" type="button" class="btn" onclick="location.href='@Url.Action("StudentDashboard", "TRWLASchedules", new { id = (int)Session["User"] })'"><i class="fa fa-tachometer" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" @*id="showMe" style="display:none;*@>
+        <h2 style="text-align:left;">Upcoming TRWLA Events</h2>
+    <div class="col-md-12 form-inline" style="margin-bottom:10px; height:500px; overflow-y:auto;">
+        
+        @foreach (var item in Model)
+        {
+            string cssClass = "col-md-5-Function";
+
+            if (item.FunctionID != null)
+            {
+                cssClass = "col-md-5-Function";
+            }
+            else if (item.ComEngID != null)
+            {
+                cssClass = "col-md-5-Com";
+            }
+            else if (item.LectureID != null)
+            {
+                cssClass = "col-md-5-Lecture";
+            }
+            <div class="@cssClass form-group" style="margin-bottom:15px; margin-top:10px;">
+                <h4 style="z-index:100; position:relative; background-color:transparent; color:white; text-align:center;">
+                    @Html.DisplayFor(modelItem => item.FunctionEvent.Function_Date, "{0:MMMM/dd/yyyy}")
+                    @Html.DisplayFor(modelItem => item.Lecture.Lecture_Date, "{0:MMMM/dd/yyyy}")
+                    @Html.DisplayFor(modelItem => item.ComEngEvent.ComEng_Date)
+                </h4>
+                <h4 style="z-index:100; position:relative; background-color:transparent; color:white; text-align:center;">
+                    @Html.DisplayFor(modelItem => item.FunctionEvent.Function_Name)
+                    @Html.DisplayFor(modelItem => item.Lecture.Lecture_Name)
+                    @Html.DisplayFor(modelItem => item.ComEngEvent.ComEng_Name)
+                </h4>
+                <h4 style="z-index:100; position:relative; background-color:transparent; color:white; text-align:center;">
+                    @Html.DisplayFor(modelItem => item.FunctionEvent.Function_Summary, new { @style = "max-width:5px; text-overflow: ellipsis;" })
+                    @Html.DisplayFor(modelItem => item.Lecture.Lecture_Summary, new { @style = "width:10%" })
+                    @Html.DisplayFor(modelItem => item.ComEngEvent.ComEng_Name, new { @style = "width:10%" })
+                </h4>
+
+                <div class="form-inline" style="z-index:100; position:relative; background-color:transparent; text-align:center;">
+                    <div class="form-group" style="z-index:100; position:relative; background-color:transparent;">
+                        <h4 style="z-index:100; position:relative; background-color:transparent; color:white; text-align:center;">
+
+                            @Html.DisplayFor(modelItem => item.FunctionEvent.Function_StartTime)
+                            @Html.DisplayFor(modelItem => item.Lecture.Lecture_StartTime)
+                            @Html.DisplayFor(modelItem => item.ComEngEvent.ComEnge_StartTime)
+
+                            to
+
+                        </h4>
+
+                    </div>
+                    <div class="form-group" style="z-index:100; position:relative; background-color:transparent;">
+                        <h4 style="z-index:100; position:relative; background-color:transparent; color:white; text-align:center;">
+
+                            @Html.DisplayFor(modelItem => item.FunctionEvent.Function_EndTime)
+                            @Html.DisplayFor(modelItem => item.Lecture.Lecture_EndTime)
+                            @Html.DisplayFor(modelItem => item.ComEngEvent.ComEng_EndTime)
+
+                        </h4>
+                    </div>
+                </div>
+
+                <h4 style="z-index:100; position:relative; background-color:transparent; color:white; text-align:center;">
+                    @Html.DisplayFor(modelItem => item.FunctionEvent.Venue.Venue_Name)
+                    @Html.DisplayFor(modelItem => item.Lecture.Residence.Res_Name)
+                    @Html.DisplayFor(modelItem => item.ComEngEvent.Venue.Venue_Name)
+                </h4>
+                <h4 style="z-index:100; position:relative; background-color:transparent;">
+                    <a href="@Url.Action("Details", new { id = item.ScheduleID })" data-toggle="tooltip" title="Details" style="margin-left:20px;"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    <a href="@Url.Action("RSVP", new { id = item.ScheduleID })" data-toggle="tooltip" title="RSVP" style="margin-left:20px;"><i class="fa fa-check" aria-hidden="true"></i></a>
+
+                    @*<button class="btn-primary" data-toggle="modal" data-target="#NotGoing">
+                            RSVP
+                        </button>*@
+
+
+                    @*<div class="form-actions no-color ">
+                            <button type="submit" value="RSVP" class="btn" id="item.Schedule">Cancel Event</button>
+                        </div>*@
+                </h4>
+            </div>
+        }
+    </div>
+        </div>
+}
+@if (Session["User"] == null)
+{
+    <h4>Something Went Wrong</h4>
+    <button type="button" class="btn" onclick="location.href='@Url.Action("Index", "Home")'">Let us start again</button>
+}
+
